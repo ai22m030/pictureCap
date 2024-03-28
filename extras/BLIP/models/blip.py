@@ -14,11 +14,11 @@ from transformers import BertTokenizer
 
 import torch
 from torch import nn
-import torch.nn.functional as F
 
 import os
 from urllib.parse import urlparse
 from timm.models.hub import download_cached_file
+
 
 class BLIP_Base(nn.Module):
     def __init__(self,                 
@@ -173,13 +173,15 @@ def blip_decoder(pretrained='',**kwargs):
         model, msg = load_checkpoint(model, pretrained)
         assert(len(msg.missing_keys) == 0)
     return model    
-    
+
+
 def blip_feature_extractor(pretrained='',**kwargs):
     model = BLIP_Base(**kwargs)
     if pretrained:
         model,msg = load_checkpoint(model,pretrained)
         assert(len(msg.missing_keys)==0)
     return model        
+
 
 def init_tokenizer():
     tokenizer_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "bert_tokenizer")
